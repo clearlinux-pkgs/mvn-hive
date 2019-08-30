@@ -4,7 +4,7 @@
 #
 Name     : mvn-hive
 Version  : 1
-Release  : 1
+Release  : 2
 URL      : https://repo.maven.apache.org/maven2/org/spark-project/hive/hive-cli/1.2.1.spark2/hive-cli-1.2.1.spark2.jar
 Source0  : https://repo.maven.apache.org/maven2/org/spark-project/hive/hive-cli/1.2.1.spark2/hive-cli-1.2.1.spark2.jar
 Source1  : https://repo.maven.apache.org/maven2/org/spark-project/hive/hive-beeline/1.2.1.spark2/hive-beeline-1.2.1.spark2.jar
