@@ -4,7 +4,7 @@
 #
 Name     : mvn-hive
 Version  : 1
-Release  : 2
+Release  : 3
 URL      : https://repo.maven.apache.org/maven2/org/spark-project/hive/hive-cli/1.2.1.spark2/hive-cli-1.2.1.spark2.jar
 Source0  : https://repo.maven.apache.org/maven2/org/spark-project/hive/hive-cli/1.2.1.spark2/hive-cli-1.2.1.spark2.jar
 Source1  : https://repo.maven.apache.org/maven2/org/spark-project/hive/hive-beeline/1.2.1.spark2/hive-beeline-1.2.1.spark2.jar
@@ -17,11 +17,16 @@ Source7  : https://repo.maven.apache.org/maven2/org/spark-project/hive/hive-jdbc
 Source8  : https://repo.maven.apache.org/maven2/org/spark-project/hive/hive-metastore/1.2.1.spark2/hive-metastore-1.2.1.spark2.jar
 Source9  : https://repo.maven.apache.org/maven2/org/spark-project/hive/hive-metastore/1.2.1.spark2/hive-metastore-1.2.1.spark2.pom
 Source10  : https://repo.maven.apache.org/maven2/org/spark-project/hive/hive/1.2.1.spark2/hive-1.2.1.spark2.pom
-Source11  : https://repo1.maven.org/maven2/org/spark-project/hive/hive/1.2.1.spark2/hive-1.2.1.spark2.pom
+Source11  : https://repo1.maven.org/maven2/org/apache/hive/hive-storage-api/2.2.1/hive-storage-api-2.2.1.jar
+Source12  : https://repo1.maven.org/maven2/org/apache/hive/hive-storage-api/2.2.1/hive-storage-api-2.2.1.pom
+Source13  : https://repo1.maven.org/maven2/org/spark-project/hive/hive/1.2.1.spark2/hive-1.2.1.spark2.pom
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : Apache-2.0
 Requires: mvn-hive-data = %{version}-%{release}
+Requires: mvn-hive-license = %{version}-%{release}
+BuildRequires : apache-maven
+BuildRequires : buildreq-mvn
 
 %description
 No detailed description available
@@ -34,11 +39,23 @@ Group: Data
 data components for the mvn-hive package.
 
 
+%package license
+Summary: license components for the mvn-hive package.
+Group: Default
+
+%description license
+license components for the mvn-hive package.
+
+
 %prep
+%setup -q -n META-INF
 
 %build
 
 %install
+mkdir -p %{buildroot}/usr/share/package-licenses/mvn-hive
+cp LICENSE %{buildroot}/usr/share/package-licenses/mvn-hive/LICENSE
+cp NOTICE %{buildroot}/usr/share/package-licenses/mvn-hive/NOTICE
 mkdir -p %{buildroot}/usr/share/java/.m2/repository/org/spark-project/hive/hive-cli/1.2.1.spark2
 cp %{SOURCE0} %{buildroot}/usr/share/java/.m2/repository/org/spark-project/hive/hive-cli/1.2.1.spark2/hive-cli-1.2.1.spark2.jar
 
@@ -72,8 +89,14 @@ cp %{SOURCE9} %{buildroot}/usr/share/java/.m2/repository/org/spark-project/hive/
 mkdir -p %{buildroot}/usr/share/java/.m2/repository/org/spark-project/hive/hive/1.2.1.spark2
 cp %{SOURCE10} %{buildroot}/usr/share/java/.m2/repository/org/spark-project/hive/hive/1.2.1.spark2/hive-1.2.1.spark2.pom
 
+mkdir -p %{buildroot}/usr/share/java/.m2/repository/org/apache/hive/hive-storage-api/2.2.1
+cp %{SOURCE11} %{buildroot}/usr/share/java/.m2/repository/org/apache/hive/hive-storage-api/2.2.1/hive-storage-api-2.2.1.jar
+
+mkdir -p %{buildroot}/usr/share/java/.m2/repository/org/apache/hive/hive-storage-api/2.2.1
+cp %{SOURCE12} %{buildroot}/usr/share/java/.m2/repository/org/apache/hive/hive-storage-api/2.2.1/hive-storage-api-2.2.1.pom
+
 mkdir -p %{buildroot}/usr/share/java/.m2/repository/org/spark-project/hive/hive/1.2.1.spark2
-cp %{SOURCE11} %{buildroot}/usr/share/java/.m2/repository/org/spark-project/hive/hive/1.2.1.spark2/hive-1.2.1.spark2.pom
+cp %{SOURCE13} %{buildroot}/usr/share/java/.m2/repository/org/spark-project/hive/hive/1.2.1.spark2/hive-1.2.1.spark2.pom
 
 
 %files
@@ -81,6 +104,8 @@ cp %{SOURCE11} %{buildroot}/usr/share/java/.m2/repository/org/spark-project/hive
 
 %files data
 %defattr(-,root,root,-)
+/usr/share/java/.m2/repository/org/apache/hive/hive-storage-api/2.2.1/hive-storage-api-2.2.1.jar
+/usr/share/java/.m2/repository/org/apache/hive/hive-storage-api/2.2.1/hive-storage-api-2.2.1.pom
 /usr/share/java/.m2/repository/org/spark-project/hive/hive-beeline/1.2.1.spark2/hive-beeline-1.2.1.spark2.jar
 /usr/share/java/.m2/repository/org/spark-project/hive/hive-beeline/1.2.1.spark2/hive-beeline-1.2.1.spark2.pom
 /usr/share/java/.m2/repository/org/spark-project/hive/hive-cli/1.2.1.spark2/hive-cli-1.2.1.spark2.jar
@@ -92,3 +117,8 @@ cp %{SOURCE11} %{buildroot}/usr/share/java/.m2/repository/org/spark-project/hive
 /usr/share/java/.m2/repository/org/spark-project/hive/hive-metastore/1.2.1.spark2/hive-metastore-1.2.1.spark2.jar
 /usr/share/java/.m2/repository/org/spark-project/hive/hive-metastore/1.2.1.spark2/hive-metastore-1.2.1.spark2.pom
 /usr/share/java/.m2/repository/org/spark-project/hive/hive/1.2.1.spark2/hive-1.2.1.spark2.pom
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/mvn-hive/LICENSE
+/usr/share/package-licenses/mvn-hive/NOTICE
